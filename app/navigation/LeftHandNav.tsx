@@ -23,7 +23,6 @@ import {
 } from '@react-navigation/drawer';
 import  PostersScreen  from '../posters/PostersScreen';
 import  SettingsScreen from '../settings/SettingsScreen';
-  
 import DrawerContent from './DrawerContent';
 
 const Drawer = createDrawerNavigator();

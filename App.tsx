@@ -20,7 +20,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import LeftHandNav from './app/navigation/LeftHandNav';
 import RootLayout from './app/_layout';
+import { requestLocationPermissions } from './app/scripts/permissions';
 const App = () => {
+  requestLocationPermissions();
   RootLayout();
   return (
     <NavigationContainer>
