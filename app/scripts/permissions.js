@@ -5,7 +5,7 @@ const requestLocationPermissions = async () => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Network Info Permission',
           message:
             'Cool Photo App needs access to your camera ' +
             'so you can take awesome pictures.',
@@ -15,9 +15,9 @@ const requestLocationPermissions = async () => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
+        console.log('We can get the network info');
       } else {
-        console.log('Camera permission denied');
+        console.log('Network permission denied');
       }
     } catch (err) {
       console.warn(err);

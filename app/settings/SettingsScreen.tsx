@@ -21,7 +21,7 @@ import {View, Text} from 'react-native';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import {Header} from '../components';
 import { ColumnDefBase, useReactTable } from '@tanstack/react-table';
-import NetInfo from "@react-native-community/netinfo"
+import { getNetworkTable } from '../scripts/network';
 
 const columnn: ColumnDefBase<String>[] = [
   
@@ -39,7 +39,9 @@ const SettingsScreen = () => {
         </View>
         <View style={styles.network} >
           <Header headerText="Network Info" />
-         
+          <View>
+         {getNetworkTable()}
+         </View>
         </View>
       </SafeAreaView>
     </SafeAreaView>
