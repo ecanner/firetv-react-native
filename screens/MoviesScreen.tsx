@@ -19,13 +19,12 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import {Header} from '../components';
+import {WebView} from 'react-native-webview';
+import {getValue} from '../scripts/storage';
 
 const MoviesScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header headerText="Movies" />
-    </SafeAreaView>
-  );
+  const val: string = getValue('url');
+  return <WebView style={styles.container} source={{uri: val}} />;
 };
 
 const styles = StyleSheet.create({

@@ -23,7 +23,7 @@ import {Header} from '../components';
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header headerText="Home" />
+      <Header headerText='Welcome' />
     </SafeAreaView>
   );
 };

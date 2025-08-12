@@ -7,9 +7,14 @@
           "isTV": true,
           "androidTVBanner": "./assets/images/icon-400x240.png"
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-router"
     ],
     "name": "ExpoTVDemo",
-    "slug": "ExpoTVDemo"
+    "slug": "ExpoTVDemo",
+    "android": {
+      "package": "com.mks.posters"
+    }
   }
 }
