@@ -26,10 +26,8 @@ import {
 import DrawerItem from './DrawerItem';
 
 const menuItems = [
-  {name: 'Home', icon: 'home', screen: 'Home'},
-  {name: 'Movies', icon: 'movie', screen: 'Movies'},
-  {name: 'TV Shows', icon: 'television', screen: 'TVShows'},
   {name: 'Settings', icon: 'account-cog', screen: 'Settings'},
+  {name: 'Posters', icon: 'movie', screen: 'Posters'},
 ];
 
 const COLLAPSED_WIDTH = 60;

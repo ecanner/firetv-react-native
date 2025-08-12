@@ -18,7 +18,7 @@
 
 import React from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
-import {Header} from '../components';
+import {Header} from '../app/components';
 
 const SettingsScreen = () => {
   return (

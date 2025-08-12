@@ -17,15 +17,13 @@
  */
 
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
-import {Header} from '../components';
+import {StyleSheet} from 'react-native';
+import {WebView} from 'react-native-webview';
+import {getValue} from '../scripts/storage';
 
-const HomeScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Header headerText='Welcome' />
-    </SafeAreaView>
-  );
+const PostersScreen = () => {
+  const val: string = getValue('url');
+  return <WebView style={styles.container} source={{uri: val}} />;
 };
 
 const styles = StyleSheet.create({
@@ -35,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default PostersScreen;

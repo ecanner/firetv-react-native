@@ -18,8 +18,8 @@
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import LeftHandNav from './navigation/LeftHandNav';
-import RootLayout from './_layout';
+import LeftHandNav from './app/navigation/LeftHandNav';
+import RootLayout from './app/_layout';
 const App = () => {
   RootLayout();
   return (

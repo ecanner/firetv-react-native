@@ -17,21 +17,36 @@
  */
 
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
-import {Header} from '../components';
-import {WebView} from 'react-native-webview';
-import {getValue} from '../scripts/storage';
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+} from '@react-navigation/drawer';
+import  PostersScreen  from '../posters/PostersScreen';
+import  SettingsScreen from '../settings/SettingsScreen';
+  
+import DrawerContent from './DrawerContent';
 
-const MoviesScreen = () => {
-  const val: string = getValue('url');
-  return <WebView style={styles.container} source={{uri: val}} />;
+const Drawer = createDrawerNavigator();
+
+const LeftHandNav = () => {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props: DrawerContentComponentProps) => {
+        const {state} = props;
+        const currentRoute = props.state.routeNames[state.index];
+        return <DrawerContent route={currentRoute} />;
+      }}
+      screenOptions={{
+        drawerType: 'permanent',
+        drawerStyle: {
+          width: 'auto',
+        },
+        headerShown: false,
+      }}>
+      <Drawer.Screen name="Posters" component={PostersScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
+    </Drawer.Navigator>
+  );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#12181F',
-  },
-});
-
-export default MoviesScreen;
+export default LeftHandNav;

@@ -1,5 +1,5 @@
-import HomeScreen from './HomeScreen';
-import MoviesScreen from './MoviesScreen';
+import HomeScreen from '../app/settings/SettingsScreen';
+import MoviesScreen from '../app/posters/PostersScreen';
 import SettingsScreen from './SettingsScreen';
 import TVShowsScreen from './TVShowsScreen';
 
