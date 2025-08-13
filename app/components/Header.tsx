@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 30,
+    paddingVertical: 15,
   },
   headerText: {
     fontSize: 24,

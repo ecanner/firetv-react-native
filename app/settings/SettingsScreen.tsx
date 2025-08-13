@@ -17,15 +17,12 @@
  */
 
 import React from 'react';
-import {View, Text} from 'react-native';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet, SafeAreaView,ScrollView} from 'react-native';
 import {Header} from '../components';
-import { ColumnDefBase, useReactTable } from '@tanstack/react-table';
 import { getNetworkTable } from '../scripts/network';
+import {View, Text} from 'react-native-ui-lib';
+import { renderSettingsForm } from './PosterUrl';
 
-const columnn: ColumnDefBase<String>[] = [
-  
-];
 const SettingsScreen = () => {
   //const ipAddress = getIPAddress();
   //console.log(ipAddress);
@@ -33,17 +30,19 @@ const SettingsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header headerText="Settings" />
-      <SafeAreaView style={styles.content}>
-        <View style={styles.posters}>
-          <Header headerText="Poster Settings" />
+      <View style={styles.content}>
+        <View style={styles.posters} marginL-60 padding-s5 flex>
+          <ScrollView>
+            {renderSettingsForm()}
+          </ScrollView>
         </View>
         <View style={styles.network} >
           <Header headerText="Network Info" />
-          <View>
+          <View centerH top paddingH-s5>
          {getNetworkTable()}
          </View>
         </View>
-      </SafeAreaView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -85,8 +84,8 @@ const styles = StyleSheet.create({
   },
   network: {
     width: '30%',
-    backgroundColor: 'steelblue',
-    color: 'lime',
+    backgroundColor: '#232f3e',
+    color: 'white',
   },
   networkLeft: {
     width: '30%',
@@ -99,7 +98,23 @@ const styles = StyleSheet.create({
   text: {
     backgroundColor:'black',
     color:'white',
-  }
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    color: 'black',
+    fontSize: 80,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20
+  },
+rowLeft: {
+    width: '35%',
+},
+rowRight: {
+    width: '65%',
+    fontWeight: 'bold',
+}
 });
 
 export default SettingsScreen;

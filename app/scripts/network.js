@@ -1,37 +1,40 @@
 import NetInfo from "@react-native-community/netinfo"
-import {StyleSheet, View, Text} from 'react-native';
-
-
+import {StyleSheet} from 'react-native';
+import { getMacAddressSync } from "react-native-device-info";
+import {View, Text, Card} from 'react-native-ui-lib';
 
 export const getNetworkTable = () => {
     let defaultSettings = [];
     const networkSettings = NetInfo.useNetInfoInstance();
     let details;
     let ipAddress = '';
+    
     if (networkSettings != null) {
         details  = networkSettings.netInfo.details;
-        defaultSettings.push({name: 'Connection Type', value: getConnType(networkSettings.netInfo.type)});
+        defaultSettings.push({key: 0, name: 'Connection Type', value: getConnType(networkSettings.netInfo.type)});
         if (details != null) {
-            defaultSettings.push({name:'IP Address', value: details.ipAddress});
+            defaultSettings.push({key: 1, name:'IP Address', value: details.ipAddress});
             if (networkSettings.netInfo.type == 'wifi') {
-                defaultSettings.push({name: 'SSID', value: details.ssid});  
+                defaultSettings.push({key: 2, name: 'SSID', value: details.ssid});  
             }
             if (networkSettings.netInfo.type == 'cellular') {
-                defaultSettings.push({name:'Generation', value: details.cellularGeneration});  
+                defaultSettings.push({key: 3, name:'Generation', value: details.cellularGeneration});  
             }
-            defaultSettings.push({name:'Online', value: (networkSettings.netInfo.isInternetReachable ? 'Connected' : 'Disconnected')});
+            defaultSettings.push({key: 4, name:'Online', value: (networkSettings.netInfo.isInternetReachable ? 'Connected' : 'Disconnected')});
             
         }
     }
-    const output = <View>
+    let mac = getMacAddressSync();
+    defaultSettings.push({name:"MAC Address", value: mac})
+    const output = <Card center gap-s5 padding-s5>
             {defaultSettings.map((setting) => {
                 const output = <View style={styles.row}>
-                <Text style={styles.rowLeft}>{setting.name}</Text>
+                <Text style={styles.rowLeft}>{setting.name}:</Text>
                 <Text style={styles.rowRight}>{setting.value}</Text>
                 </View>;
                 return output
             })}
-    </View>;
+    </Card>;
 return output;
 }
 const styles = StyleSheet.create({
@@ -39,16 +42,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         color: 'black',
-        fontSize: '40pt',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        paddingTop: '2rem'
+        fontSize: 40,
       },
     rowLeft: {
-        width: '35%',
+        width: '50%',
+        fontSize:20,
     },
     rowRight: {
-        width: '65%',
+        width: '50%',
+        fontSize:20,
         fontWeight: 'bold',
     }
 });

@@ -10,7 +10,7 @@ export default function RootLayout() {
     useEffect(() => {
     console.log(loaded);
     if (loaded) {
-      const val = getValue('url');
+      const val = getValue('urla');
       if (val.length > 0) {
         console.log('there is a value');
         router.navigate('./MoviesScreen.tsx');
