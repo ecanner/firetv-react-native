@@ -15,9 +15,9 @@ const requestLocationPermissions = async () => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('We can get the network info');
+       // console.log('We can get the network info');
       } else {
-        console.log('Network permission denied');
+      //  console.log('Network permission denied');
       }
     } catch (err) {
       console.warn(err);

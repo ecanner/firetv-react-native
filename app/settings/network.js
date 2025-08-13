@@ -1,8 +1,10 @@
 import NetInfo from "@react-native-community/netinfo"
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import { getMacAddressSync } from "react-native-device-info";
-import {View, Text, Card} from 'react-native-ui-lib';
 
+//import {View, Text, Card} from 'react-native-ui-lib';
+import { CardProps } from 'tamagui';
+import {XStack, Card, Text} from 'tamagui';
 export const getNetworkTable = () => {
     let defaultSettings = [];
     const networkSettings = NetInfo.useNetInfoInstance();
@@ -26,12 +28,12 @@ export const getNetworkTable = () => {
     }
     let mac = getMacAddressSync();
     defaultSettings.push({name:"MAC Address", value: mac})
-    const output = <Card center gap-s5 padding-s5>
+    const output = <Card size='$3' mx='$4' gap='$4' backgroundColor={'white'} bordered elevate padded m-5>
             {defaultSettings.map((setting) => {
-                const output = <View style={styles.row}>
+                const output = <XStack>
                 <Text style={styles.rowLeft}>{setting.name}:</Text>
                 <Text style={styles.rowRight}>{setting.value}</Text>
-                </View>;
+                </XStack>;
                 return output
             })}
     </Card>;
