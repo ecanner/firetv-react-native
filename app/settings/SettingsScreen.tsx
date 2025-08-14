@@ -22,7 +22,7 @@ import {Header} from '../components';
 import { getNetworkTable } from './network';
 import {View, Text} from 'react-native-ui-lib';
 import { renderSettingsForm } from './PosterUrl';
-
+import Tamagui from 'tamagui';
 const SettingsScreen = () => {
   //const ipAddress = getIPAddress();
   //console.log(ipAddress);
@@ -31,14 +31,14 @@ const SettingsScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header headerText="Settings" />
       <View style={styles.content}>
-        <View style={styles.posters} marginL-60 padding-s5 flex>
+        <View style={styles.posters}>
           <ScrollView>
             {renderSettingsForm()}
           </ScrollView>
         </View>
         <View style={styles.network} >
           <Header headerText="Network Info" />
-          <View centerH top paddingH-s5>
+          <View >
          {getNetworkTable()}
          </View>
         </View>

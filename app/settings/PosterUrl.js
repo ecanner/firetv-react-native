@@ -229,20 +229,20 @@ function createUrl(value, name) {
 }
 const styles = StyleSheet.create({
     titleHolder: {
-        padding:10,
+        padding: 10,
         margin: 1,
         borderColor: '#232f3e',
         borderWidth: 1,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        margin:0,
-        width:'100%',
-        backgroundColor: '#232f3e',
+        margin: 0,
+        width: '100%',
+        backgroundColor: '#232f3e'
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'white'
     },
     formLabel: {
         width:'50%',
@@ -255,8 +255,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     label: {
-        fontSize: 10,
-      },
+        fontSize: 10
+    },
     holders: {
         fontSize: 20,
     },
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
         color:'blue',
       },
     containerTextStyle: {
-        fontSize: 15,
+        fontSize: 15
     },
     containerTrailingTextStyle: {
         fontSize: 10,
