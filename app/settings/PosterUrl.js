@@ -16,7 +16,7 @@ import { Header } from '../components';
 //const [screenPreset, setScreenPreset] = useState(SegmentedControl.presets.DEFAULT);
 
 const startingUrl = 'https://missingkidsaver.com/posters/?';
-var urlParams = {
+let urlParams = {
     currentUrl: (getValue('url') == undefined ? startingUrl : decodeURIComponent(getValue('url'))),
     sortType: getValue('sortType'),
     sortOrder: getValue('sortOrder'),
@@ -61,23 +61,20 @@ export const renderSettingsForm = () => {
           labelStyle: styles.label,
           style: textStyle,
           margin: 0,
-          padding: 15,
+          padding: Spacings.s2,
           maxLength: 6,
           centered: false,
-          preset: 'outline',
-          borderBottomWidth:2,
+          preset: 'underline',
           showClearButton: true,
-          borderBottomColor: '#232f3e',
-
-          backgroundColor: 'lime',
+          fieldStyle: styles.fieldStyle,
         };
       }, [textStyle]);
       
-    const caseCard = <Card style={StyleSheet.holders} elevation={5} left gap-s2 flexG>
+    const caseCard = <Card style={StyleSheet.holders} elevation={5} left gap-s4 flexG>
         <View style={styles.titleHolder} >
             <Text style={styles.title}>Search Settings</Text>
         </View>
-        <View padding-s5 gap-s2>
+        <View padding-s5 gap-s5>
         <SegmentedControl 
             flexG
             label={'Sort By'} 
@@ -88,7 +85,8 @@ export const renderSettingsForm = () => {
                 let dataItem = sortByItems[data];
                 saveValue(dataItem.value,'sortType');
             }} 
-            segments={[{ id: 0, label: 'Most Recent', value: 'Something' }, { id: 1, label: 'Alphabetical' }]} />
+            marginB-10
+            segments={sortByItems} />
         <SegmentedControl 
             label={'Sort Order'} 
             id={'sortOrder'} 
@@ -98,7 +96,7 @@ export const renderSettingsForm = () => {
                 let dataItem = sortOrderItems[data];
                 saveValue(dataItem.value,'sortOrder');              
             }} 
-            segments={[{ id: 0, label: 'Descending' }, { id: 1, label: 'Ascending' }]} />
+            segments={sortOrderItems} />
         <SegmentedControl 
             label={'Poster Count'} 
             id={'count'} 
@@ -109,10 +107,10 @@ export const renderSettingsForm = () => {
                 let dataItem = posterCountItems[data];
                 saveValue(dataItem.value,'count');
             }} 
-            segments={[{id:0, label: '1' }, {id: 1, label: '4' }]} />
-         <View style={styles.holders} row>
-            <Text style={styles.formLabel} marginR-60>Skip Cases</Text>
-            <Stepper 
+            segments={posterCountItems} />
+         <View style={styles.holders} row gap-s5>
+            <Text style={styles.formLabel} marginR-60 paddingB-20>Skip Cases</Text>
+            <Stepper
                 style={styles.formItem} 
                 label="Skip Cases" 
                 onValueChange={saveValue} 
@@ -123,32 +121,29 @@ export const renderSettingsForm = () => {
                 name="skip">Skip Cases</Stepper>
         </View>
         <View centerV style={styles.holders} row>
-            <Text style={styles.formLabel} paddingR-60>Cases to Display</Text>
+            <Text style={styles.formLabel} marginB-20>Cases to Display</Text>
             <NumberInput 
                 margin-0
                 textFieldProps={textFieldProps}
-                preset={"underline"}
                 showClearButton={true}
-                centered='true'
                 style={styles.formItem} 
                 fractionDigits={0} 
-                initialValue={urlParams.limit ?? 20} 
+                initialNumber={urlParams.limit == undefined ? 20 : urlParams.limit} 
                 onChangeNumber={(data) => {
-                    saveValue(data,'limit');
+                    saveValue(data.number,'limit');
                 }} 
                 name="limit" />
         </View>
          <View centerV style={styles.holders} >
             <View row padding-0 margin-0 centerV>
-                <Text centerV style={styles.formLabel} paddingR-60>Search Radius</Text>
+                <Text style={styles.formLabel} width={'100%'} backgroundColor={'olive'} margin-0 marginB-20>Search Radius</Text>
                 <NumberInput 
                     textFieldProps={textFieldProps}
                     fractionDigits={0} 
                     initialValue={urlParams.geolocationDistanceInMiles ?? 0} 
                     onChangeNumber={(data) => {
-                        saveValue(data, 'geolocationDistanceInMiles');
+                        saveValue(data.number, 'geolocationDistanceInMiles');
                     }} 
-                    preset='form'
                     trailingText={'in Miles'}
                     trailingTextStyle={styles.containerTextStyle}
                     name="geolocationDistanceInMiles" />
@@ -179,17 +174,18 @@ function saveValue(value, name) {
     } else {
         return;
     }
-    storeValue(value, name);
-    console.log('name', name);
-    console.log('value', value);
+   // storeValue(value, name);
+   // console.log('name', name);
+   // console.log('value', value);
     createUrl(value, name);
 }
 
 function storeValue(value, name) {
     console.log(name, value);
-    setValue(name,value)
+    //setValue(name,value)
 }
 function createUrl(value, name) {
+    console.log('********** START CREATE URL **********');
     console.log('currentUrl', urlParams['currentUrl']);
     let queryParam = name + '=' + value
     /*
@@ -215,16 +211,19 @@ function createUrl(value, name) {
             continue;
         }
         const val = urlParams[pname];
-        console.log(val);
+        console.log(pname, val);
         if(val != undefined) {
-            pArray.push(queryParam);
+            console.log(queryParam);
+            pArray.push(pname + '=' + val);
         }
     }
+    console.log('pArray', pArray);
     const queryString = pArray.join('&');
     console.log('queryString', queryString);
     let currentUrl = startingUrl + queryString; 
     urlParams['currentUrl'] = currentUrl;
     console.log(currentUrl);
+    console.log('********** END CREATE URL **********');
     return currentUrl;
 }
 const styles = StyleSheet.create({
@@ -265,16 +264,24 @@ const styles = StyleSheet.create({
         color:'blue',
       },
     containerTextStyle: {
-        fontSize: 15
+        fontSize: 15,
     },
     containerTrailingTextStyle: {
         fontSize: 10,
     },
     mainText: {
         fontSize:20,
-        borderColor: '#232f3e',       
-        fontWeight:'bold'
-      }
+    },
+    fieldStyle: {
+        borderColor: '#232f3e',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: Spacings.s2,
+        verticalAlign: 'center',
+        alignContent: 'center',
+
+        justifyContent: 'center',
+    }
 });
 
 /*

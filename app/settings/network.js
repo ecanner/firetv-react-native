@@ -7,7 +7,7 @@ export const getNetworkTable = () => {
     let defaultSettings = [];
     const networkSettings = NetInfo.useNetInfoInstance();
     let details;
-    let ipAddress = '';
+    let ipAddress = ''; 
     
     if (networkSettings != null) {
         details  = networkSettings.netInfo.details;
@@ -86,7 +86,7 @@ function getConnType(type) {
         case 'ethernet':
             connName = 'Ethernet';
             break;
-        case 'wifi':
+        case 'wimax':
             connName = 'WiMax';
             break;
         case 'vpn':
