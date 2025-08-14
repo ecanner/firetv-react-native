@@ -19,7 +19,7 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView,ScrollView} from 'react-native';
 import {Header} from '../components';
-import { getNetworkTable } from '../scripts/network';
+import { getNetworkTable } from './network';
 import {View, Text} from 'react-native-ui-lib';
 import { renderSettingsForm } from './PosterUrl';
 

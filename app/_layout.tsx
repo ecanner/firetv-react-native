@@ -13,7 +13,10 @@ export default function RootLayout() {
       const val = getValue('urla');
       if (val.length > 0) {
         console.log('there is a value');
-        router.navigate('./MoviesScreen.tsx');
+        router.navigate('./posters/PosterScreen');
+      } else {
+        console.log('there is no value');
+        router.navigate('./settings/SettingsScreen');
       }
     }
   }, [router]);

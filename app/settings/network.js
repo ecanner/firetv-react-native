@@ -25,7 +25,7 @@ export const getNetworkTable = () => {
         }
     }
     let mac = getMacAddressSync();
-    defaultSettings.push({name:"MAC Address", value: mac})
+    defaultSettings.push({key: 5, name:"MAC Address", value: mac})
     const output = <Card center gap-s5 padding-s5>
             {defaultSettings.map((setting) => {
                 const output = <View style={styles.row}>
