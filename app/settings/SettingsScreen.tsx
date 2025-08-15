@@ -20,7 +20,7 @@ import React from 'react';
 import {StyleSheet, SafeAreaView,ScrollView} from 'react-native';
 import {Header} from '../components';
 import { getNetworkTable } from './network';
-import {View, Text} from 'react-native-ui-lib';
+import {View, TabController, Text} from 'react-native-ui-lib';
 import { renderSettingsForm } from './PosterUrl';
 
 const SettingsScreen = () => {
@@ -30,11 +30,16 @@ const SettingsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header headerText="Settings" />
+      
       <View style={styles.content}>
+      
         <View style={styles.posters} marginL-60 padding-s5 flex>
-          <ScrollView>
-            {renderSettingsForm()}
-          </ScrollView>
+        <TabController items={[{label: 'Search Settings'}, {label: 'Location Search'}, {label: 'Date Search'}]}>
+          <TabController.TabBar enableShadow />
+          
+          {renderSettingsForm()}
+
+          </TabController>
         </View>
         <View style={styles.network} >
           <Header headerText="Network Info" />

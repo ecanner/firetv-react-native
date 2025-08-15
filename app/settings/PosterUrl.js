@@ -9,7 +9,7 @@ import Stepper from 'react-native-ui-lib/stepper';
 import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 import DateTimePicker from 'react-native-ui-lib/dateTimePicker';
 import TextField from 'react-native-ui-lib/textField';
-import {Spacings, Typography} from 'react-native-ui-lib';
+import {Spacings, Typography, TabController} from 'react-native-ui-lib';
 import {setValue,getValue} from '../scripts/storage'
 import { Header } from '../components';
 
@@ -33,16 +33,16 @@ let urlParams = {
     count: getValue('count'),
 };
 const sortByItems = [
-    {id: 0, value: 'MostRecent', label: 'Most Recent'},
-    {id: 1, value: 'AZ', label: 'Alphabetical'}
+    {key: 0, value: 'MostRecent', label: 'Most Recent'},
+    {key: 1, value: 'AZ', label: 'Alphabetical'}
 ]
 const sortOrderItems = [
-    {id: 1, value: 'DESC', label: 'Descending'},
-    {id: 0, value: 'ASC', label: 'Ascending'}
+    {key: 0, value: 'DESC', label: 'Descending'},
+    {key: 1, value: 'ASC', label: 'Ascending'}
 ];
 const posterCountItems = [
-    {id: 0, value: 1, label: 1},
-    {id: 1, value: 4, label: 4},
+    {key: 0, value: 1, label: 1},
+    {key: 1, value: 4, label: 4},
 ];
 
 
@@ -70,89 +70,109 @@ export const renderSettingsForm = () => {
         };
       }, [textStyle]);
       
-    const caseCard = <Card style={StyleSheet.holders} elevation={5} left gap-s4 flexG>
+    const searchCard = <Card style={StyleSheet.holders} flexG elevation={5} gap-s4>
         <View style={styles.titleHolder} >
             <Text style={styles.title}>Search Settings</Text>
         </View>
+        <View>
         <View padding-s5 gap-s5>
-        <SegmentedControl 
-            flexG
-            label={'Sort By'} 
-            id={'sortType'} 
-            borderRadius={5} 
-            preset={'default'}
-            onChangeIndex={(data) => {
-                let dataItem = sortByItems[data];
-                saveValue(dataItem.value,'sortType');
-            }} 
-            marginB-10
-            segments={sortByItems} />
-        <SegmentedControl 
-            label={'Sort Order'} 
-            id={'sortOrder'} 
-            preset={'default'} 
-            borderRadius={5} 
-            onChangeIndex={(data) => {
-                let dataItem = sortOrderItems[data];
-                saveValue(dataItem.value,'sortOrder');              
-            }} 
-            segments={sortOrderItems} />
-        <SegmentedControl 
-            label={'Poster Count'} 
-            id={'count'} 
-            preset={'default'} 
-            borderRadius={5} 
-            onChangeIndex={(data) => {
-                console.log(data);
-                let dataItem = posterCountItems[data];
-                saveValue(dataItem.value,'count');
-            }} 
-            segments={posterCountItems} />
-         <View style={styles.holders} row gap-s5>
-            <Text style={styles.formLabel} marginR-60 paddingB-20>Skip Cases</Text>
-            <Stepper
-                style={styles.formItem} 
-                label="Skip Cases" 
-                onValueChange={saveValue} 
-                minValue={0} 
-                testID="skip" 
-                initialValue={urlParams.skip ?? 0} 
-                type="default"
-                name="skip">Skip Cases</Stepper>
-        </View>
-        <View centerV style={styles.holders} row>
-            <Text style={styles.formLabel} marginB-20>Cases to Display</Text>
-            <NumberInput 
-                margin-0
-                textFieldProps={textFieldProps}
-                showClearButton={true}
-                style={styles.formItem} 
-                fractionDigits={0} 
-                initialNumber={urlParams.limit == undefined ? 20 : urlParams.limit} 
-                onChangeNumber={(data) => {
-                    saveValue(data.number,'limit');
-                }} 
-                name="limit" />
-        </View>
-         <View centerV style={styles.holders} >
-            <View row padding-0 margin-0 centerV>
-                <Text style={styles.formLabel} width={'100%'} backgroundColor={'olive'} margin-0 marginB-20>Search Radius</Text>
-                <NumberInput 
-                    textFieldProps={textFieldProps}
-                    fractionDigits={0} 
-                    initialValue={urlParams.geolocationDistanceInMiles ?? 0} 
-                    onChangeNumber={(data) => {
-                        saveValue(data.number, 'geolocationDistanceInMiles');
-                    }} 
-                    trailingText={'in Miles'}
-                    trailingTextStyle={styles.containerTextStyle}
-                    name="geolocationDistanceInMiles" />
+            <View style={styles.holders} >
+                <SegmentedControl
+                    label={'Sort By'}
+                    id={'sortType'}
+                    borderRadius={5}
+                    preset={'default'}
+                    onChangeIndex={(data) => {
+                        let dataItem = sortByItems[data];
+                        saveValue(dataItem.value, 'sortType');
+                    }}
+                    marginB-10
+                    segments={[{id: 0, value: 'MostRecent', label: 'Most Recent'},
+                    {id: 1, value: 'AZ', label: 'Alphabetical'}]} />
+            </View>
+            <View style={styles.holders}>
+                <SegmentedControl
+                    label={'Sort Order'}
+                    id={'sortOrder'}
+                    preset={'default'}
+                    borderRadius={5}
+                    onChangeIndex={(data) => {
+                        let dataItem = sortOrderItems[data];
+                        saveValue(dataItem.value, 'sortOrder');
+                    }}
+                    segments={[{id: 0, value: 'DESC', label: 'Descending'},
+                    {id: 1, value: 'ASC', label: 'Ascending'}]} />
+            </View>
+            <View style={styles.holders}>
+                <SegmentedControl
+                    label={'Poster Count'}
+                    id={'count'}
+                    preset={'default'}
+                    borderRadius={5}
+                    onChangeIndex={(data) => {
+                        console.log(data);
+                        let dataItem = posterCountItems[data];
+                        saveValue(dataItem.value, 'count');
+                    }}
+                    segments={posterCountItems} />
+            </View>
+            <View style={styles.holders} row>
+                <View style={styles.column}>
+                    <Text style={styles.formLabel} marginR-60 paddingB-20>Skip Cases</Text>
+                </View>
+                <View style={styles.column}>
+                    <Stepper
+                        style={styles.formItem}
+                        label="Skip Cases"
+                        onValueChange={saveValue}
+                        minValue={0}
+                        testID="skip"
+                        initialValue={urlParams.skip ?? 0}
+                        type="default"
+                        name="skip">Skip Cases</Stepper>
+                </View>
+            </View>
+            <View centerV style={styles.holders} row>
+                <View style={styles.column}>
+                    <Text style={styles.formLabel} marginB-20>Cases to Display</Text>
+                </View>
+                <View style={styles.column}>
+                    <NumberInput
+                        margin-0
+                        textFieldProps={textFieldProps}
+                        showClearButton={true}
+                        style={styles.formItem}
+                        fractionDigits={0}
+                        initialNumber={urlParams.limit == undefined ? 20 : urlParams.limit}
+                        onChangeNumber={(data) => {
+                            saveValue(data.number, 'limit');
+                        }}
+                        name="limit" />
+                </View>
+            </View>
+            <View centerV style={styles.holders} padding-0 gap-s0>
+                <View row padding-0margin-0 centerV >
+                    <View style={styles.column}>
+                        <Text style={styles.formLabel} backgroundColor={'olive'} margin-0>Search Radius</Text>
+                        <Text marginL-30 numberOfLines={3} width={'50%'} style={styles.containerTrailingTextStyle}>Setting a distance will ignore other location search options</Text>
                     </View>
-                <Text marginT-0 style={styles.containerTrailingTextStyle}>Setting a distance will ignore other location search options</Text>
-            </View>   
-        </View>
-        <TextField
+                    <View style={styles.column}>
+                        <NumberInput
+                            left
+                            textFieldProps={textFieldProps}
+                            fractionDigits={0}
+                            initialValue={urlParams.geolocationDistanceInMiles ?? 0}
+                            onChangeNumber={(data) => {
+                                saveValue(data.number, 'geolocationDistanceInMiles');
+                            }}
+                            trailingText={'in Miles'}
+                            trailingTextStyle={styles.containerTextStyle}
+                            name="geolocationDistanceInMiles" />
+                    </View></View>
+            </View>
+            <TextField
             maxLength={300}
+            numberOfLines={3}
             flexG
             width={"100%"}
             label='Text Field'
@@ -160,10 +180,21 @@ export const renderSettingsForm = () => {
             backgroundColor='#232f3e'
             color='white'
             preset='form'></TextField>
+        </View></View>
     </Card>;
+    const dateCard = <Card style={StyleSheet.holders} flexG elevation={5} gap-s4>
+        <View style={styles.titleHolder} >
+            <Text style={styles.title}>Location Search</Text>
+        </View>
 
-    return <View gap-50 centerH row>
-        <View padding-s5>{caseCard}</View>       
+    </Card>;
+    const locationCard = <Card style={StyleSheet.holders} flexG elevation={5} gap-s4>
+        <View style={styles.titleHolder} >
+            <Text style={styles.title}>Date Search</Text>
+        </View>
+    </Card>;
+    return <View flex>
+       <View>{searchCard}</View>
     </View>;
 }
 
@@ -244,9 +275,8 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     formLabel: {
-        width:'50%',
+        width:'40%',
         fontSize: 20,
-        backgroundColor: 'orange'
       },
     formItem: {
         width: '50%',
@@ -267,7 +297,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     containerTrailingTextStyle: {
-        fontSize: 10,
+        fontSize: 15,
+        paddingTop: 0,
+        marginTop:0,
     },
     mainText: {
         fontSize:20,
@@ -277,11 +309,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: Spacings.s2,
-        verticalAlign: 'center',
-        alignContent: 'center',
-
+        alignContent: 'bottom',
+        margin: 0,
         justifyContent: 'center',
-    }
+    },
+    column: {
+        width: '50%',
+    },
 });
 
 /*
