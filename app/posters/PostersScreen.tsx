@@ -16,14 +16,19 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {getValue} from '../scripts/storage';
+import {useRouter} from 'expo-router';
+import {getItemSync} from '../../scripts/storage'; // Import the synchronous version of getItem
 
 const PostersScreen = () => {
-  const val: string = getValue('url');
-  return <WebView style={styles.container} source={{uri: val}} />;
+  //console.log("global.currentUrl: ", global.currentUrl);
+  
+  const router = useRouter();
+      const currentUrl = getItemSync('currentUrl');
+      console.log('currentUrl:', currentUrl);
+      return <WebView style={styles.container} source={{uri: global.currentUrl}} />;
 };
 
 const styles = StyleSheet.create({

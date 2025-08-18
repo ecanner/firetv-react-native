@@ -44,6 +44,8 @@ const LeftHandNav = () => {
       }}>
       <Drawer.Screen name="Posters" component={PostersScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
+      
+      
     </Drawer.Navigator>
   );
 };

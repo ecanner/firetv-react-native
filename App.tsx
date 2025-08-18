@@ -16,20 +16,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React from 'react';
+import React, {useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import LeftHandNav from './app/navigation/LeftHandNav';
-import RootLayout from './app/_layout';
-import { requestLocationPermissions } from './app/scripts/permissions';
-
-
+import { setItemSync, getItemSync } from './scripts/storage';
+import { requestLocationPermissions } from './scripts/permissions';
+import './scripts/globals'
 
 // make imports typed
 
 const App = () => {
   requestLocationPermissions();
-  RootLayout();
-
+  
+  setItemSync('testUrl', 'https://missingkidsaver.com/posters/?');
+ 
   return (
     <NavigationContainer>
       <LeftHandNav />
@@ -38,3 +38,4 @@ const App = () => {
 };
 
 export default App;
+

@@ -10,28 +10,31 @@ import SegmentedControl from 'react-native-ui-lib/segmentedControl';
 import DateTimePicker from 'react-native-ui-lib/dateTimePicker';
 import TextField from 'react-native-ui-lib/textField';
 import {Spacings, Typography, TabController} from 'react-native-ui-lib';
-import {setValue,getValue} from '../scripts/storage'
-import { Header } from '../components';
+import {setItemValue,getItemValue, getAllItems, getAllItemsSync, getItemSync} from '../../scripts/storage'
+import { Header } from '..';
 
 //const [screenPreset, setScreenPreset] = useState(SegmentedControl.presets.DEFAULT);
 
 const startingUrl = 'https://missingkidsaver.com/posters/?';
 let urlParams = {
-    currentUrl: (getValue('url') == undefined ? startingUrl : decodeURIComponent(getValue('url'))),
-    sortType: getValue('sortType'),
-    sortOrder: getValue('sortOrder'),
-    skip: getValue('skip'),
-    limit: getValue('limit'),
-    geolocationDistanceInMiles: getValue('geolocationDistanceInMiles'),
-    missingCity: getValue('missingCity'),
-    missingCounty: getValue('missingCounty'),
-    missingState: getValue('missingState'),
-    missingZip: getValue('missingZip'),
-    missingDate: getValue('missingDate'),
-    missingDateFrom: getValue('missingDateFrom'),
-    missingDateTo: getValue('missingDateTo'),   
-    count: getValue('count'),
-};
+    testUrl: (getItemSync('url') == undefined ? startingUrl : decodeURIComponent(getItem('url')))
+}
+/*
+    sortType: getItem('sortType'),
+    sortOrder: getItem('sortOrder'),
+    skip: getItem('skip'),
+    limit: getItem('limit'),
+    geolocationDistanceInMiles: getItem('geolocationDistanceInMiles'),
+    missingCity: getItem('missingCity'),
+    missingCounty: getItem('missingCounty'),
+    missingState: getItem('missingState'),
+    missingZip: getItem('missingZip'),
+    missingDate: getItem('missingDate'),
+    missingDateFrom: getItem('missingDateFrom'),
+    missingDateTo: getItem('missingDateTo'),   
+    count: getItem('count'),
+};*/
+//let urlParams = {};
 const sortByItems = [
     {key: 0, value: 'MostRecent', label: 'Most Recent'},
     {key: 1, value: 'AZ', label: 'Alphabetical'}
@@ -44,10 +47,22 @@ const posterCountItems = [
     {key: 0, value: 1, label: 1},
     {key: 1, value: 4, label: 4},
 ];
-
-
+/*
+export const loadParameters = () => {
+    urlParams = getAllItems().then((params) => {
+        console.log('urlParams', params);
+        return {renderSettingsForm};
+    }).catch((error) => {
+        console.error("Error retrieving parameters:", error);
+        return {renderSettingsForm}
+    });
+}*/
+let count = 0;
 export const renderSettingsForm = () => {
-       
+    urlParams = getAllItemsSync()
+    count++;
+    console.log('renderSettingsForm called', count);
+    console.log('urlParams', urlParams);
    /* let sortType = getValue('sortType');
     let sortOrder = getValue('sortOrder');
     let skip = getValue('skip');
@@ -253,6 +268,7 @@ function createUrl(value, name) {
     console.log('queryString', queryString);
     let currentUrl = startingUrl + queryString; 
     urlParams['currentUrl'] = currentUrl;
+    setItemValue('currentUrl', encodeURIComponent(currentUrl));
     console.log(currentUrl);
     console.log('********** END CREATE URL **********');
     return currentUrl;

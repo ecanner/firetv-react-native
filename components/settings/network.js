@@ -1,6 +1,6 @@
 import NetInfo from "@react-native-community/netinfo"
 import {StyleSheet} from 'react-native';
-import { getMacAddressSync } from "react-native-device-info";
+import {getMacAddressSync } from "react-native-device-info";
 import {View, Text, Card} from 'react-native-ui-lib';
 
 export const getNetworkTable = () => {

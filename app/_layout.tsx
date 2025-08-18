@@ -1,16 +1,22 @@
 import React from 'react';
+import '../scripts/globals'; // Ensure global variables are set up
 import { useEffect } from 'react';
-import {getValue} from './scripts/storage';
-import {useRouter, Slot} from 'expo-router';
+import {useRouter, Stack} from 'expo-router';
+import { setItemSync, getItemSync } from '../scripts/storage';
+import { requestLocationPermissions } from '../scripts/permissions';
 
-export default function RootLayout() {
- // console.log('root layout');
-  const loaded = '';
+const RootLayout = () => {
+  console.log('RootLayout component loaded');
+//  requestLocationPermissions();
+  //RootLayout();
+  setItemSync('testUrl', 'https://missingkidsaver.com/posters/?');
+  console.log('root layout');
+/*  const loaded = '';
   const router = useRouter();
     useEffect(() => {
     console.log(loaded);
     if (loaded) {
-    const val = getValue('urla');
+    const val = ''; // = getItemValue('urla');
     console.log(val);
       if (val.length > 0) {
         console.log('there is a value');
@@ -25,6 +31,10 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+*/ 
 
-  return <Slot />;
+
+  return <Stack />;
 }
+
+export default RootLayout;

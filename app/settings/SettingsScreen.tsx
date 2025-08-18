@@ -18,10 +18,10 @@
 
 import React from 'react';
 import {StyleSheet, SafeAreaView,ScrollView} from 'react-native';
-import {Header} from '../components';
-import { getNetworkTable } from './network';
+import {Header} from '../../components';
+import { getNetworkTable } from '../../components/settings/network';
 import {View, TabController, Text} from 'react-native-ui-lib';
-import { renderSettingsForm } from './PosterUrl';
+import { renderSettingsForm } from '../../components/settings/PosterUrl';
 
 const SettingsScreen = () => {
   //const ipAddress = getIPAddress();
